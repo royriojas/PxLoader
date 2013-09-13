@@ -98,4 +98,6 @@
     });
   }
 
+  global.PxLoaderHowl;
+
 }(this));
