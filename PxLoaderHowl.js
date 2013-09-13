@@ -98,6 +98,6 @@
     });
   }
 
-  global.PxLoaderHowl;
+  global.PxLoaderHowl = PxLoaderHowl;
 
 }(this));
