@@ -1,3 +1,6 @@
+*Note:* This fork adds the PxLoaderHowl plugin, used to load sounds to be play with [Howler](http://goldfirestudios.com/blog/104/howler.js-Modern-Web-Audio-Javascript-Library) as an alternative to
+SoundManager2 which is the default used by PxLoader
+
 PxLoader is a Javascript library that helps you download images, sound files or anything else you need before you take a specific action on your site (like showing a user interface or starting a game). You can use it to create a preloader for HTML5 games and websites.
 
 Details and examples:
