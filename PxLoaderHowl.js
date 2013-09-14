@@ -23,14 +23,14 @@
       formats.forEach(function (format) {
         urls.push(url.replace(regex, function (a, b) {
           return '.' + format;
-        }))
+        }));
       });
 
       me.howl = new Howl({
         urls: urls,
         autoplay : false,
         onload : function () {
-          me.onLoad && me.onLoad(me.id);
+          me.onLoad && (me.onLoad(me.id));
         },
         onloaderror : function () {
           me.onError && me.onError(me.id);
@@ -52,7 +52,7 @@
     me.tags = tags;
     me.priority = priority;
 
-    me.sound = new HowlerProxy({
+    me.sound = new HowlProxy({
       id : id,
       url : url,
       onLoad : function () {

@@ -5,6 +5,7 @@ module.exports = function(grunt) {
         'PxLoader.js',
         'PxLoaderImage.js',
         'PxLoaderSound.js',
+        'PxLoaderHowl.js',
         'PxLoaderVideo.js'
     ];
 
@@ -20,6 +21,7 @@ module.exports = function(grunt) {
         jshint: {
             files: ['gruntfile.js'].concat(srcFiles),
             options: {
+                expr: true,
                 curly: true,
                 eqeqeq: true,
                 immed: true,
