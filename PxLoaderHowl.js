@@ -1,5 +1,5 @@
 /*global PxLoader: true, define: true, Howler: true, Howl: true */
-;(function(global){
+;(function($, global){
 
   var HowlProxy = function (opts) {
     var me = this;
@@ -9,7 +9,6 @@
   };
 
   HowlProxy.prototype = {
-    constructor: HowlProxy,
 
     load: function () {
       var me = this;
@@ -36,6 +35,17 @@
           me.onError && me.onError(me.id);
         }
       });
+    },
+
+    play : function () {
+      var me = this,
+        d = $.Deferred();
+
+      me.howl && me.howl.play(function (id) {
+        d.resolve(id);
+      });
+
+      return d.promise();
     },
 
     isLoaded : function () {
@@ -100,4 +110,4 @@
 
   global.PxLoaderHowl = PxLoaderHowl;
 
-}(this));
+}(jQuery, this));
