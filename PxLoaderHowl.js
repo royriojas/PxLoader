@@ -70,7 +70,7 @@
           howl.play();
         }
         else {
-          var volume = howl.volume;
+          var volume = howl.volume();
           me.fadeIn(volume, me.xFadeTime);
         }
 
