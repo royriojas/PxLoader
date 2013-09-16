@@ -45,7 +45,7 @@
       });
     },
 
-    play : function () {
+    play : function (atVolume) {
       var me = this,
         doFadeIn = false,
         d = $.Deferred();
@@ -62,6 +62,10 @@
       var howl = me.howl;
 
       if (howl) {
+        if (!kno.isNull(atVolume)) {
+          howl.volume(atVolume);
+        }
+
         howl.on(ns, function () {
           d.resolve({});
           howl.off(ns);
@@ -70,8 +74,7 @@
           howl.play();
         }
         else {
-          var volume = howl.volume();
-          me.fadeIn(volume, me.xFadeTime);
+          me.fadeIn(atVolume || 1, me.xFadeTime);
         }
 
         if (me.channel) {
