@@ -56,7 +56,9 @@
         var currentSound = channels[me.channel];
         if (currentSound && currentSound !== me) {
           doFadeIn = true;
-          currentSound.fadeOut(0, me.xFadeTime);
+          currentSound.fadeOut(0, me.xFadeTime, function () {
+            currentSound.stop();
+          });
         }
       }
 
