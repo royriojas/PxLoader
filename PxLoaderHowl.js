@@ -60,6 +60,13 @@
       return d.promise();
     },
 
+    playAsLoop : function () {
+      var me = this;
+      me.loop(true);
+      me.play();
+      return me;
+    },
+
     isLoaded : function () {
       var me = this;
       return !!me.howl._loaded;
