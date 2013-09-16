@@ -12,7 +12,8 @@
     me.channel = opts.channel;
     me.onLoad = opts.onLoad;
     me.onError = opts.onError;
-    me.xFadeTime = opts.xFadeTime || 0.5;
+    me.xFadeTime = (opts.xFadeTime || 0.5) * 1000;
+
     me.instanceId = soundCounter++;
   };
 
