@@ -1,11 +1,15 @@
 /*global PxLoader: true, define: true, Howler: true, Howl: true */
 ;(function($, global){
 
+  var soundCounter = 0;
+
   var HowlProxy = function (opts) {
     var me = this;
     me.id = opts.id;
     me.url = opts.url;
     me.onLoad = opts.onLoad;
+    me.onError = opts.onError;
+    me.instanceId = soundCounter++;
   };
 
   HowlProxy.prototype = {
@@ -41,9 +45,17 @@
       var me = this,
         d = $.Deferred();
 
-      me.howl && me.howl.play(function (id) {
-        d.resolve(id);
-      });
+      var ns = 'end.end_' + me.instanceId;
+      var howl = me.howl;
+
+      if (howl) {
+        howl.on(ns, function () {
+          d.resolve({});
+          howl.off(ns);
+        });
+
+        howl.play();
+      }
 
       return d.promise();
     },
@@ -69,23 +81,21 @@
   });
 
   // PxLoader plugin to load sound using Howler
-  function PxLoaderHowl(id, url, tags, priority) {
+  function PxLoaderHowl(options) {
     var me = this,
       loader = null;
 
-    me.tags = tags;
-    me.priority = priority;
+    me.tags = options.tags;
+    me.priority = options.priority;
 
-    me.sound = new HowlProxy({
-      id : id,
-      url : url,
+    me.sound = new HowlProxy($.extend({
       onLoad : function () {
         loader && loader.onLoad(me);
       },
       onError : function () {
         loader && loader.onError(me);
       }
-    });
+    }, options));
 
     me.start = function (pxLoader) {
       // we need the loader ref so we can notify upon completion
@@ -110,7 +120,7 @@
 
 // add a convenience method to PxLoader for adding a sound
   PxLoader.prototype.addHowl = function (id, url, tags, priority) {
-    var howlerLoader = new PxLoaderHowl(id, url, tags, priority);
+    var howlerLoader = new PxLoaderHowl({id: id, url: url, tags: tags, priority: priority});
     this.add(howlerLoader);
     return howlerLoader.sound;
   };
