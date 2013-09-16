@@ -165,6 +165,7 @@
     });
   }
 
+  global.HowlProxy = HowlProxy;
   global.PxLoaderHowl = PxLoaderHowl;
 
 }(jQuery, this));
