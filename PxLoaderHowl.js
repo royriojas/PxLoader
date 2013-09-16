@@ -13,8 +13,9 @@
     me.onLoad = opts.onLoad;
     me.onError = opts.onError;
     me.xFadeTime = (opts.xFadeTime || 0.5) * 1000;
-
     me.instanceId = soundCounter++;
+
+    me.opts = opts;
   };
 
   HowlProxy.prototype = {
@@ -34,7 +35,7 @@
         }));
       });
 
-      me.howl = new Howl({
+      me.howl = new Howl($.extend(me.opts, {
         urls: urls,
         autoplay : false,
         onload : function () {
@@ -43,7 +44,7 @@
         onloaderror : function () {
           me.onError && me.onError(me.id);
         }
-      });
+      }));
     },
 
     play : function (atVolume) {
