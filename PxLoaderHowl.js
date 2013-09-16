@@ -71,8 +71,11 @@
         }
         else {
           var volume = howl.volume;
-          channels[me.channel] = me;
           me.fadeIn(volume, me.xFadeTime);
+        }
+
+        if (me.channel) {
+          channels[me.channel] = me;
         }
       }
 
