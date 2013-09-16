@@ -54,6 +54,20 @@
     }
   };
 
+  var methods = ["urls", "pause", "stop", "mute", "unmute",
+    "volume", "loop", "sprite", "pos", "pos3d", "fade", "fadeIn",
+    "fadeOut", "on", "off", "unload", "fadeStep"];
+
+  // add methods to the proxy
+  methods.forEach(function (name) {
+    HowlProxy.prototype[name] = function () {
+      var me = this;
+      var howl = me.howl || {};
+      var method = howl[name];
+      method && method.apply(howl, arguments);
+    };
+  });
+
   // PxLoader plugin to load sound using Howler
   function PxLoaderHowl(id, url, tags, priority) {
     var me = this,
