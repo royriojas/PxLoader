@@ -3,12 +3,16 @@
 
   var soundCounter = 0;
 
+  var channels = {};
+
   var HowlProxy = function (opts) {
     var me = this;
     me.id = opts.id;
     me.url = opts.url;
+    me.channel = opts.channel;
     me.onLoad = opts.onLoad;
     me.onError = opts.onError;
+    me.xFadeTime = opts.xFadeTime || 0.5;
     me.instanceId = soundCounter++;
   };
 
@@ -43,7 +47,16 @@
 
     play : function () {
       var me = this,
+        doFadeIn = false,
         d = $.Deferred();
+
+      if (me.channel) {
+        var currentSound = channels[me.channel];
+        if (currentSound && currentSound !== me) {
+          doFadeIn = true;
+          currentSound.fadeOut(0, me.xFadeTime);
+        }
+      }
 
       var ns = 'end.end_' + me.instanceId;
       var howl = me.howl;
@@ -53,8 +66,14 @@
           d.resolve({});
           howl.off(ns);
         });
-
-        howl.play();
+        if (!doFadeIn) {
+          howl.play();
+        }
+        else {
+          var volume = howl.volume;
+          channels[me.channel] = me;
+          me.fadeIn(volume, me.xFadeTime);
+        }
       }
 
       return d.promise();
@@ -121,7 +140,7 @@
     };
 
     me.getName = function () {
-      return url;
+      return options.url;
     };
   }
 
