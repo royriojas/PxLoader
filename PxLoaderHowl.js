@@ -18,6 +18,20 @@
     me.opts = opts;
   };
 
+  HowlProxy.getSoundInChannel = function (channel) {
+    var currentSound = me.channels[channel];
+    return sound;
+  };
+
+  HowlProxy.stopSoundInChannel = function (channel) {
+    var currentSound = me.channels[channel];
+    if (currentSound) {
+      currentSound.fadeOut(0, me.xFadeTime, function () {
+        currentSound.stop();
+      });  
+    }
+  };
+
   HowlProxy.prototype = {
 
     load: function () {
