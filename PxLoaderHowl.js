@@ -19,16 +19,16 @@
   };
 
   HowlProxy.getSoundInChannel = function (channel) {
-    var currentSound = me.channels[channel];
-    return sound;
+    var currentSound = channels[channel];
+    return currentSound;
   };
 
   HowlProxy.stopSoundInChannel = function (channel) {
-    var currentSound = me.channels[channel];
+    var currentSound = channels[channel];
 
     if (currentSound) {
-      me.channels[channel] = null;
-      currentSound.fadeOut(0, me.xFadeTime, function () {
+      channels[channel] = null;
+      currentSound.fadeOut(0, currentSound.xFadeTime, function () {
         currentSound.stop();
       });  
     }
@@ -82,7 +82,7 @@
       var howl = me.howl;
 
       if (howl) {
-        if (!kno.isNull(atVolume)) {
+        if (typeof atVolume !== "undefined") {
           howl.volume(atVolume);
         }
 
