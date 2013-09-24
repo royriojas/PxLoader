@@ -25,7 +25,9 @@
 
   HowlProxy.stopSoundInChannel = function (channel) {
     var currentSound = me.channels[channel];
+
     if (currentSound) {
+      me.channels[channel] = null;
       currentSound.fadeOut(0, me.xFadeTime, function () {
         currentSound.stop();
       });  
