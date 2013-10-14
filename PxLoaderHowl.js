@@ -5,21 +5,6 @@
 
   var channels = {};
 
-  var oldPlay = Howl.prototype.play,
-    oldStop = Howl.prototype.stop;
-
-  Howl.prototype.play = function () {
-    var me = this;
-    me.playing = true;
-    return oldPlay.apply(me, arguments);
-  };
-
-  Howl.prototype.stop = function () {
-    var me = this;
-    me.playing = false;
-    return oldStop.apply(me, arguments);
-  };
-
   var HowlProxy = function (opts) {
     var me = this;
     me.id = opts.id;
@@ -84,7 +69,7 @@
 
       if (me.channel) {
         var currentSound = channels[me.channel];
-        if (currentSound && currentSound !== me) {
+        if (currentSound) {
           doFadeIn = true;
           currentSound.fadeOut(0, me.xFadeTime, function () {
             currentSound.stop();
@@ -100,19 +85,13 @@
           howl.volume(atVolume);
         }
 
-
         howl.on(ns, function () {
           d.resolve({});
-          if (!me.howl._loop) {
-            me.howl.playing = false;
-          }
           howl.off(ns);
         });
 
         if (!doFadeIn) {
-          if (!me.howl.playing) {
-            howl.play();
-          }
+          howl.play();
         }
         else {
           me.fadeIn(atVolume || 1, me.xFadeTime);
