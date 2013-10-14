@@ -11,13 +11,13 @@
   Howl.prototype.play = function () {
     var me = this;
     me.playing = true;
-    oldPlay && oldPlay.apply(me, arguments);
+    return oldPlay.apply(me, arguments);
   };
 
   Howl.prototype.stop = function () {
     var me = this;
     me.playing = false;
-    oldStop && oldStop.apply(me, arguments);
+    return oldStop.apply(me, arguments);
   };
 
   var HowlProxy = function (opts) {
