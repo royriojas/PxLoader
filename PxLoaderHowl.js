@@ -103,6 +103,9 @@
 
         howl.on(ns, function () {
           d.resolve({});
+          if (!me.howl._loop) {
+            me.howl.playing = false;
+          }
           howl.off(ns);
         });
 
