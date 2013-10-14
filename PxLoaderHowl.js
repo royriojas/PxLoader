@@ -89,7 +89,8 @@
           d.resolve({});
           howl.off(ns);
         });
-        if (!doFadeIn && howl._activeNode().paused) {
+        var activeNode = howl._activeNode() || { paused: true };
+        if (!doFadeIn && activeNode.paused) {
           howl.play();
         }
         else {
