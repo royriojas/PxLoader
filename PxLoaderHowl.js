@@ -14,7 +14,6 @@
     me.onError = opts.onError;
     me.xFadeTime = (opts.xFadeTime || 0.5) * 1000;
     me.instanceId = soundCounter++;
-
     me.opts = opts;
   };
 
@@ -90,7 +89,7 @@
           d.resolve({});
           howl.off(ns);
         });
-        if (!doFadeIn) {
+        if (!doFadeIn && howl._activeNode().paused) {
           howl.play();
         }
         else {
