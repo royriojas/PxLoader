@@ -69,7 +69,7 @@
 
       if (me.channel) {
         var currentSound = channels[me.channel];
-        if (currentSound) {
+        if (currentSound && currentSound !== me) {
           doFadeIn = true;
           currentSound.fadeOut(0, me.xFadeTime, function () {
             currentSound.stop();
@@ -90,6 +90,8 @@
           howl.off(ns);
         });
 
+        // Ugly hack to make sure sound starts again
+        howl.stop();
         if (!doFadeIn) {
           howl.play();
         }
