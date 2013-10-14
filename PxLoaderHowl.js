@@ -5,6 +5,21 @@
 
   var channels = {};
 
+  var oldPlay = Howl.prototype.play,
+    oldStop = Howl.prototype.stop;
+
+  Howl.prototype.play = function () {
+    var me = this;
+    me.playing = true;
+    oldPlay && oldPlay.apply(me, arguments);
+  };
+
+  Howl.prototype.stop = function () {
+    var me = this;
+    me.playing = false;
+    oldStop && oldStop.apply(me, arguments);
+  };
+
   var HowlProxy = function (opts) {
     var me = this;
     me.id = opts.id;
@@ -85,13 +100,16 @@
           howl.volume(atVolume);
         }
 
+
         howl.on(ns, function () {
           d.resolve({});
           howl.off(ns);
         });
-        var activeNode = howl._activeNode() || { paused: true };
-        if (!doFadeIn && activeNode.paused) {
-          howl.play();
+
+        if (!doFadeIn) {
+          if (!me.howl.playing) {
+            howl.play();
+          }
         }
         else {
           me.fadeIn(atVolume || 1, me.xFadeTime);
@@ -118,7 +136,7 @@
     }
   };
 
-  var methods = ["urls", "pause", "stop", "mute", "unmute",
+  var methods = ["urls", "mute", "unmute", "pause", "stop",
     "volume", "loop", "sprite", "pos", "pos3d", "fade", "fadeIn",
     "fadeOut", "on", "off", "unload", "fadeStep"];
 
