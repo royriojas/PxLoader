@@ -39,14 +39,14 @@
       var me = this;
 
       var url = me.url;
-      var regex = /\.(.*)$/g;
+      var regex = /(.+)\.(\w+)$/;
 
       var urls = [];
       var formats = ['m4a', 'ogg', 'mp3'];
 
       formats.forEach(function (format) {
         urls.push(url.replace(regex, function (a, b) {
-          return '.' + format;
+          return b + '.' + format;
         }));
       });
 
